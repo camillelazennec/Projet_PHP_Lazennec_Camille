@@ -3,6 +3,7 @@
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,9 +29,19 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
+
     Route::get('/elephant', function () {
         return view('admin.dashboard');
     });
+
+    Route::get('/elephant/users', [AdminUserController::class, 'index'])
+        ->name('admin.users.index');
+
+    Route::get('/elephant/users/{user}', [AdminUserController::class, 'show'])
+        ->name('admin.users.show');
+
+    Route::delete('/elephant/users/{user}', [AdminUserController::class, 'destroy'])
+        ->name('admin.users.destroy');
 });
 
 require __DIR__.'/auth.php';
