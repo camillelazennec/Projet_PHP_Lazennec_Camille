@@ -10,13 +10,23 @@
         par {{ $offer->user->name }}
     </li>
     @if ($offer->user_id === auth()->id())
-    <a href="{{ route('offers.edit', $offer) }}">Modifier</a>
+        <a href="{{ route('offers.edit', $offer) }}">Modifier</a>
 
-    <form method="POST" action="{{ route('offers.destroy', $offer) }}" style="display:inline">
+        <form method="POST" action="{{ route('offers.destroy', $offer) }}" style="display:inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit">Supprimer</button>
+        </form>
+    @endif
+    <form method="POST" action="{{ route('offers.favorite', $offer) }}" style="display:inline">
         @csrf
-        @method('DELETE')
-        <button type="submit">Supprimer</button>
+        <button type="submit">
+            @if (auth()->user()->favoriteOffers->contains($offer->id))
+                Retirer des favoris
+            @else
+                Ajouter aux favoris
+            @endif
+        </button>
     </form>
-@endif
 @endforeach
 </ul>

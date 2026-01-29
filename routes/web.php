@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\OfferController;
+use App\Models\Offer;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -26,6 +27,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-dashboard', function () {
     return view('user.dashboard');
     })->name('user.dashboard');
+    Route::post('/offers/{offer}/favorite', function (Offer $offer) {
+        auth()->user()->favoriteOffers()->toggle($offer->id);
+        return back();
+    })->name('offers.favorite');
+    Route::get('/my-favorites', function () {
+        return view('user.favorites');
+    })->name('user.favorites');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
