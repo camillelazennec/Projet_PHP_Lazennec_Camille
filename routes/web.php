@@ -19,6 +19,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/offers', [OfferController::class, 'index'])->name('offers.index');
     Route::get('/offers/create', [OfferController::class, 'create'])->name('offers.create');
     Route::post('/offers', [OfferController::class, 'store'])->name('offers.store');
+    Route::get('/offers/{offer}/edit', [OfferController::class, 'edit'])->name('offers.edit');
+    Route::put('/offers/{offer}', [OfferController::class, 'update'])->name('offers.update');
+    Route::delete('/offers/{offer}', [OfferController::class, 'destroy'])->name('offers.destroy');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {

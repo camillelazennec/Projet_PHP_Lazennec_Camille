@@ -39,4 +39,41 @@ class OfferController extends Controller
 
         return redirect()->route('offers.index');
     }
+
+    public function edit(Offer $offer)
+    {
+        if ($offer->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        return view('offers.edit', compact('offer'));
+    }
+
+    public function update(Request $request, Offer $offer)
+    {
+        if ($offer->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        $offer->update($request->only('title', 'description', 'quantity'));
+
+        return redirect()->route('offers.index');
+    }
+
+    public function destroy(Offer $offer)
+    {
+        if ($offer->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $offer->delete();
+
+        return redirect()->route('offers.index');
+    }
 }
