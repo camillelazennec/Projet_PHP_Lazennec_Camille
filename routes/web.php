@@ -22,6 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/offers/{offer}/edit', [OfferController::class, 'edit'])->name('offers.edit');
     Route::put('/offers/{offer}', [OfferController::class, 'update'])->name('offers.update');
     Route::delete('/offers/{offer}', [OfferController::class, 'destroy'])->name('offers.destroy');
+    Route::get('/my-dashboard', function () {
+    return view('user.dashboard');
+    })->name('user.dashboard');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
