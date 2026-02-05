@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminUserController;
 
 Route::get('/', function () {
-    return view('home');
+    $offers = \App\Models\Offer::latest()->take(12)->get();
+    return view('home', compact('offers'));
 })->name('home');
+
 
 Route::get('/dashboard', function () {
     if (auth()->user()->role === 'admin') {
