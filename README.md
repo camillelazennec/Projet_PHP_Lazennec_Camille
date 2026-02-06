@@ -183,3 +183,5 @@ password: CamilleLazennec
 * notifications
 * API REST
 * amélioration UX / Design
+
+Camille Lazennec - 2éme année de Bachelor Informatique et Cybersécurité
